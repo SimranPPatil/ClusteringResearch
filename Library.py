@@ -84,12 +84,15 @@ def build_stats_dict(filename):
         cache_stats = {}
         with open(filename, "r") as input_file:
             for line in input_file:
-                data = line.split("== ")[1]
-                data = data.strip().split(":")
-                if len(data[0]) > 0:
-                    key = data[0]
-                    val = data[1].strip().split(" ")[0]
-                    cache_stats.setdefault(key, val)
+                try:
+                    data = line.split("== ")[1]
+                    data = data.strip().split(":")
+                    if len(data[0]) > 0:
+                        key = data[0]
+                        val = data[1].strip().split(" ")[0]
+                        cache_stats.setdefault(key, val)
+                except Exception as e:
+                    print(e)
         return cache_stats
 
 def cost_analysis(length, dictionary, k, maxiter):
@@ -138,17 +141,17 @@ if __name__ == "__main__":
     maxiter = 50
     accuracy_kmeans, k, X_population, X = KMeans_main(maxiter)
     
-    if accuracy_kmeans == 1:
-        X= X_population
-        centroids = np.asarray([[1.0, 1.0], [-1.0, -1.0], [1.0, -1.0]]) #KMeans
-        classes = np.zeros(X.shape[0], dtype=np.float64)
-        distances = np.zeros([X.shape[0], k], dtype=np.float64)
+    # if accuracy_kmeans == 1:
+    #     X= X_population
+    #     centroids = np.asarray([[1.0, 1.0], [-1.0, -1.0], [1.0, -1.0]]) #KMeans
+    #     classes = np.zeros(X.shape[0], dtype=np.float64)
+    #     distances = np.zeros([X.shape[0], k], dtype=np.float64)
         
-        centroids, classes = MyKMeans(maxiter, centroids, classes, distances, X, k)
-        print(centroids)
-    else:
-        #DBSCAN
-        num_disagree, dictionary = DBSCAN_main(X)
-        print('FAIL -', num_disagree, 'labels don\'t match.')
+    #     centroids, classes = MyKMeans(maxiter, centroids, classes, distances, X, k)
+    #     print(centroids)
+    # else:
+    #     #DBSCAN
+    num_disagree, dictionary = DBSCAN_main(X)
+    print('FAIL -', num_disagree, 'labels don\'t match.')
     KMeans_cost, DBSCAN_cost, cache_stats_kmeans, cache_stats_dbscan = cost_analysis(len(X), dictionary, k, maxiter)
     final_choice(KMeans_cost, DBSCAN_cost, X_population, k, maxiter)
