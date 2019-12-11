@@ -79,17 +79,3 @@ def regionQuery(D, P, eps):
 if __name__ == "__main__":
     X, X_population = DBSCAN_initialize()
     my_labels = MyDBSCAN(X, eps=0.3, MinPts=10)
-    k = 3
-    maxiter = 50
-    cmd = "valgrind --tool=cachegrind python3 KMeans.py " + str(k) + " " + str(maxiter)
-    #subprocess.Popen(cmd, shell=True)
-    output = subprocess.run(cmd, shell=True, capture_output=True)
-    # print("output: ", output)
-	
-    lines = []
-    with subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True) as proc:
-        print(proc.stdout.read())
-
-    
-
-    
