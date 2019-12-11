@@ -140,18 +140,18 @@ if __name__ == "__main__":
    
     maxiter = 50
     accuracy_kmeans, k, X_population, X = KMeans_main(maxiter)
-    
-    # if accuracy_kmeans == 1:
-    #     X= X_population
-    #     centroids = np.asarray([[1.0, 1.0], [-1.0, -1.0], [1.0, -1.0]]) #KMeans
-    #     classes = np.zeros(X.shape[0], dtype=np.float64)
-    #     distances = np.zeros([X.shape[0], k], dtype=np.float64)
+    print(accuracy_kmeans)
+    if accuracy_kmeans == 1:
+        X= X_population
+        centroids = np.asarray([[1.0, 1.0], [-1.0, -1.0], [1.0, -1.0]]) #KMeans
+        classes = np.zeros(X.shape[0], dtype=np.float64)
+        distances = np.zeros([X.shape[0], k], dtype=np.float64)
         
-    #     centroids, classes = MyKMeans(maxiter, centroids, classes, distances, X, k)
-    #     print(centroids)
-    # else:
-    #     #DBSCAN
-    num_disagree, dictionary = DBSCAN_main(X)
-    print('FAIL -', num_disagree, 'labels don\'t match.')
-    KMeans_cost, DBSCAN_cost, cache_stats_kmeans, cache_stats_dbscan = cost_analysis(len(X), dictionary, k, maxiter)
-    final_choice(KMeans_cost, DBSCAN_cost, X_population, k, maxiter)
+        centroids, classes = MyKMeans(maxiter, centroids, classes, distances, X, k)
+        print(centroids)
+    else:
+        #DBSCAN
+        num_disagree, dictionary = DBSCAN_main(X)
+        print('FAIL -', num_disagree, 'labels don\'t match.')
+        KMeans_cost, DBSCAN_cost, cache_stats_kmeans, cache_stats_dbscan = cost_analysis(len(X), dictionary, k, maxiter)
+        final_choice(KMeans_cost, DBSCAN_cost, X_population, k, maxiter)
