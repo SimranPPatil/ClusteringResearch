@@ -9,7 +9,7 @@ from sklearn.cluster import KMeans
 from scipy.spatial.distance import cdist
 
 
-def DBSCAN_initialize():   
+def DBSCAN_initialize(fraction):   
     X_population = []
     X_temp = []
 
@@ -24,9 +24,9 @@ def DBSCAN_initialize():
     
     X_population = np.array(X_temp) #Losing precision
     indices = np.arange(len(X_population))
-
+    data_size = int(len(X_population) * fraction)
     #Selects the number of data points from the dataset
-    rnd_indices = np.random.choice(indices, size=300)
+    rnd_indices = np.random.choice(indices, size=data_size)
     X = X_population[rnd_indices]
     return X, X_population
 
@@ -76,7 +76,11 @@ def regionQuery(D, P, eps):
 
 
 if __name__ == "__main__":
-
-	X, X_population = DBSCAN_initialize()
-	my_labels = MyDBSCAN(X, eps=0.3, MinPts=10)
+    if len(sys.argv) < 2:
+        print("Enter fraction of dataset")
+        exit()
+        
+    fraction = float(sys.argv[1])
+    X, X_population = DBSCAN_initialize(fraction)
+    my_labels = MyDBSCAN(X, eps=0.3, MinPts=10)
 	

@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 from scipy.spatial.distance import cdist
 
-def KMeans_initialize():   
+def KMeans_initialize(fraction):   
     X_population = []
     X_temp = []
 
@@ -22,9 +22,10 @@ def KMeans_initialize():
     
     X_population = np.array(X_temp) #Losing precision
     indices = np.arange(len(X_population))
-
+    data_size = int(len(X_population)*fraction)
+    print("Current data size: ", data_size)
     #Selects the number of data points from the dataset
-    rnd_indices = np.random.choice(indices, size=300)
+    rnd_indices = np.random.choice(indices, size=data_size)
     X = X_population[rnd_indices]
     return X, X_population, rnd_indices
 
@@ -83,7 +84,7 @@ def validate_Kmeans(X, centroids, classes, rnd_indices):
 	#Assuming 100% accuracy
 
 	accuracy_kmeans = 0
-	for i in range(0, len(classes)):
+	for i in range(len(classes)):
 		if classified_labels[i] == classes[i]:
 			accuracy_kmeans += 1
 	
@@ -91,25 +92,26 @@ def validate_Kmeans(X, centroids, classes, rnd_indices):
 	#	accuracy_kmeans = 0 #Accuracy not 100%
 	#	iteration += 1
 	#print(accuracy_kmeans)
-	return accuracy_kmeans
+	return accuracy_kmeans/len(classes)
 
 
 if __name__ == "__main__":
-	if len(sys.argv) < 3:
-		exit()
 
-	k =  int(sys.argv[1])
-	maxiter = int(sys.argv[2])
-	print(k,maxiter)
-
-	X, X_population, rnd_indices = KMeans_initialize()
-
-	centroids = np.asarray([[1.0, 1.0], [-1.0, -1.0], [1.0, -1.0]]) #KMeans
-	classes = np.zeros(X.shape[0], dtype=np.float64)
-	distances = np.zeros([X.shape[0], k], dtype=np.float64)
+    if len(sys.argv) < 4:
+        exit()
         
-	centroids, classes = MyKMeans(maxiter, centroids, classes, distances, X, k)
-	print(centroids)
+    k =  int(sys.argv[1])
+    maxiter = int(sys.argv[2])
+    fraction = float(sys.argv[3])
+    print(k,maxiter, fraction)
+    
+    X, X_population, rnd_indices = KMeans_initialize(fraction)
+    centroids = np.random.rand(k,2) #KMeans
+    print("centroids at start: ", centroids)
+    classes = np.zeros(X.shape[0], dtype=np.float64)
+    distances = np.zeros([X.shape[0], k], dtype=np.float64)
+    centroids, classes = MyKMeans(maxiter, centroids, classes, distances, X, k)
+    print(centroids)
 	
 
 	

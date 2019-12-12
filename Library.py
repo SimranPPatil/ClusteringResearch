@@ -8,12 +8,12 @@ from sklearn.cluster import DBSCAN
 import subprocess
 import os
 
-def KMeans_main(maxiter):
-    X, X_population, rnd_indices = KMeans_initialize()
+def KMeans_main(maxiter, fraction):
+    X, X_population, rnd_indices = KMeans_initialize(fraction)
     k = determine_K(X)
     
     #Defining centers
-    centroids = np.asarray([[1.0, 1.0], [-1.0, -1.0], [1.0, -1.0]])
+    centroids = np.random.rand(k,2)
     
     # Initialize the vectors in which we will store the assigned classes of each data point and the calculated distances from each centroid
     classes = np.zeros(X.shape[0], dtype=np.float64)
@@ -35,20 +35,20 @@ def KMeans_main(maxiter):
 
 def validate_DBSCAN(skl_labels, my_labels):
     # Scikit learn uses -1 to for NOISE, and starts cluster labeling at 0. I start numbering at 1, so increment the skl cluster numbers by 1.
-    for i in range(0, len(skl_labels)):
+    for i in range(len(skl_labels)):
         if not skl_labels[i] == -1:
             skl_labels[i] += 1
 
     num_disagree = 0
     # Go through each label and make sure they match (print the labels if they # don't)
     count = 0
-    for i in range(0, len(skl_labels)):
+    for i in range(len(skl_labels)):
         if not skl_labels[i] == my_labels[i]:
             #print('Scikit learn:', skl_labels[i], 'mine:', my_labels[i])
             num_disagree += 1
         else:
-            count = count+1
-    return num_disagree
+            count += 1
+    return num_disagree/len(skl_labels)
 
 def get_labels_DBSCAN(rnd_indices):
 	f = open("make_blobs_labels.txt", "r")
@@ -120,9 +120,11 @@ def build_stats_dict(filename):
                         cache_stats.setdefault(key, val)
                 except Exception as e:
                     print(e)
+        for key in cache_stats:
+            print(key)
         return cache_stats
 
-def cost_analysis(length, dictionary, k, maxiter):
+def cost_analysis(length, dictionary, k, maxiter, fraction):
     KMeans_cost = kmeans_cost(length)
     print("KMeans cost = ", KMeans_cost)
 
@@ -130,7 +132,7 @@ def cost_analysis(length, dictionary, k, maxiter):
     print("DBSCAN_cost = ", DBSCAN_cost)
     
     # getting memory costs for kmeans
-    cmd = "valgrind --tool=cachegrind python3 KMeans.py " + str(k) + " " + str(maxiter)
+    cmd = "valgrind --tool=cachegrind python3 KMeans.py " + str(k) + " " + str(maxiter) + " " + str(fraction)
     with open("temp", "w") as f:
         subprocess.Popen(cmd, stdout=f, stderr=f, shell=True).wait()
 
@@ -139,7 +141,7 @@ def cost_analysis(length, dictionary, k, maxiter):
         subprocess.Popen(cmd, stdout=f, stderr=f, shell=True).wait()
 
     # getting memory costs for dbscan
-    cmd = "valgrind --tool=cachegrind python3 DBSCAN.py"
+    cmd = "valgrind --tool=cachegrind python3 DBSCAN.py " + str(fraction)
     with open("temp", "w") as f:
         subprocess.Popen(cmd, stdout=f, stderr=f, shell=True).wait()
 
@@ -170,18 +172,24 @@ def final_choice(KMeans_cost, DBSCAN_cost, X_population, k, maxiter):
                 
         classes = np.zeros(X.shape[0], dtype=np.float64)
         distances = np.zeros([X.shape[0], k], dtype=np.float64)
-        centroids = np.asarray([[1.0, 1.0], [-1.0, -1.0], [1.0, -1.0]]) #KMeans
+        centroids = np.random.rand(k,2) #KMeans
                 
         centroids, classes = MyKMeans(maxiter, centroids, classes, distances, X_population, k)
 
 if __name__ == "__main__":
    
+    if len(sys.argv) < 2:
+        print("Enter fraction")
+        exit()
+
+    fraction = float(sys.argv[1])
     maxiter = 50
-    accuracy_kmeans, k, X_population, X, rnd_indices = KMeans_main(maxiter)
+    accuracy_kmeans, k, X_population, X, rnd_indices = KMeans_main(maxiter, fraction)
+    data_size = int(len(X_population) * fraction)
     print("Accuracy_KMEANS", accuracy_kmeans)
-    if accuracy_kmeans == 300:
+    if accuracy_kmeans == 1:
 	    X= X_population
-	    centroids = np.asarray([[1.0, 1.0], [-1.0, -1.0], [1.0, -1.0]]) #KMeans
+	    centroids = np.random.rand(k,2) #KMeans
 	    classes = np.zeros(X.shape[0], dtype=np.float64)
 	    distances = np.zeros([X.shape[0], k], dtype=np.float64)
 		
@@ -190,9 +198,9 @@ if __name__ == "__main__":
     else:
 		#DBSCAN
         num_disagree, dictionary = DBSCAN_main(X, rnd_indices)
-        print("Accuracy_DBSCAN", num_disagree)
+        print("Accuracy_DBSCAN", 1-num_disagree)
 
-        if num_disagree == 300:
+        if num_disagree == 0:
             print('PASS - All labels match!')
 
             X= X_population
@@ -201,5 +209,5 @@ if __name__ == "__main__":
 
         else:
             print('FAIL -', num_disagree, 'labels don\'t match.')
-            KMeans_cost, DBSCAN_cost, cache_stats_kmeans, cache_stats_dbscan = cost_analysis(len(X), dictionary, k, maxiter)
+            KMeans_cost, DBSCAN_cost, cache_stats_kmeans, cache_stats_dbscan = cost_analysis(len(X), dictionary, k, maxiter, fraction)
             final_choice(KMeans_cost, DBSCAN_cost, X_population, k, maxiter)
