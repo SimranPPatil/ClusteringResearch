@@ -21,13 +21,14 @@ def KMeans_initialize(fraction, data_file):
             X_temp.append(X_values)
     
     X_population = np.array(X_temp) #Losing precision
-    indices = np.arange(len(X_population))
+    #indices = np.arange(len(X_population))
     data_size = int(len(X_population)*fraction)
-    print("Current data size: ", data_size)
+    #print("Current data size: ", data_size)
     #Selects the number of data points from the dataset
-    rnd_indices = np.random.choice(indices, size=data_size)
-    X = X_population[rnd_indices]
-    return X, X_population, rnd_indices
+    #rnd_indices = np.random.choice(indices, size=data_size)
+    #X = X_population[rnd_indices]
+    X = X_population[:data_size]
+    return X, X_population
 
 def determine_K(X):
     #Determining the value of k in kmeans
@@ -64,7 +65,7 @@ def MyKMeans(maxiter, centroids, classes, distances, X, k):
 
     return centroids, classes
 
-def validate_Kmeans(X, centroids, classes, rnd_indices, label_file):
+def validate_Kmeans(X, centroids, classes, label_file):
 	#Validating
 	#kmeans = KMeans(n_clusters=3)
 	#kmeans = kmeans.fit(X)
@@ -76,7 +77,7 @@ def validate_Kmeans(X, centroids, classes, rnd_indices, label_file):
 	classified_labels = []
 
 	#Extracting labels from the file
-	for i in rnd_indices:
+	for i in range(len(X)):
 		classified_labels.append(int(lines[i].strip("\n")))	
 	
 	#print(len(classified_labels))
@@ -97,17 +98,19 @@ def validate_Kmeans(X, centroids, classes, rnd_indices, label_file):
 
 if __name__ == "__main__":
 
-    if len(sys.argv) < 4:
+    if len(sys.argv) < 5:
         exit()
         
     k =  int(sys.argv[1])
     maxiter = int(sys.argv[2])
     fraction = float(sys.argv[3])
-    print(k,maxiter, fraction)
+    data_file = sys.argv[4]
+    print(k,maxiter, fraction,  data_file)
     
-    X, X_population, rnd_indices = KMeans_initialize(fraction, data_file)
-    centroids = np.random.rand(k,2) #KMeans
-    print("centroids at start: ", centroids)
+    X, X_population = KMeans_initialize(fraction, data_file)
+    #centroids = np.random.rand(k,2) #KMeans
+    #print("centroids at start: ", centroids)
+    centroids = X[:k]
     classes = np.zeros(X.shape[0], dtype=np.float64)
     distances = np.zeros([X.shape[0], k], dtype=np.float64)
     centroids, classes = MyKMeans(maxiter, centroids, classes, distances, X, k)
