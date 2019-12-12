@@ -1,5 +1,6 @@
 from KMeans import *
 from DBSCAN import *
+from DBSCAN_without_choice import *
 from sklearn.cluster import KMeans
 from scipy.spatial.distance import cdist
 from sklearn.preprocessing import StandardScaler
@@ -8,7 +9,7 @@ import subprocess
 import os
 
 def KMeans_main(maxiter):
-    X, X_population = KMeans_initialize()
+    X, X_population, rnd_indices = KMeans_initialize()
     k = determine_K(X)
     
     #Defining centers
@@ -17,10 +18,19 @@ def KMeans_main(maxiter):
     # Initialize the vectors in which we will store the assigned classes of each data point and the calculated distances from each centroid
     classes = np.zeros(X.shape[0], dtype=np.float64)
     distances = np.zeros([X.shape[0], k], dtype=np.float64)
+
+    # start_kmeans = time.time()
     centroids, classes = MyKMeans(maxiter, centroids, classes, distances, X, k)
-    accuracy_kmeans = validate_Kmeans(X, centroids)
+    # end_kmeans = time.time()
+    #print(centroids)
+
+    accuracy_kmeans = validate_Kmeans(X, centroids, classes, rnd_indices)
     
-    return accuracy_kmeans, k, X_population, X
+    # Time taken in seconds
+    # time_kmeans = end_kmeans - start_kmeans
+    # print("Elapsed (after compilation) = %s" % time_kmeans)
+
+    return accuracy_kmeans, k, X_population, X, rnd_indices
 
 
 def validate_DBSCAN(skl_labels, my_labels):
@@ -34,19 +44,36 @@ def validate_DBSCAN(skl_labels, my_labels):
     count = 0
     for i in range(0, len(skl_labels)):
         if not skl_labels[i] == my_labels[i]:
-            print('Scikit learn:', skl_labels[i], 'mine:', my_labels[i])
+            #print('Scikit learn:', skl_labels[i], 'mine:', my_labels[i])
             num_disagree += 1
         else:
             count = count+1
     return num_disagree
 
-def DBSCAN_main(X):
+def get_labels_DBSCAN(rnd_indices):
+	f = open("make_blobs_labels.txt", "r")
+	lines = f.readlines()
+	classified_labels = []
+
+	#Extracting labels from the file
+	for i in rnd_indices:
+		classified_labels.append(int(lines[i].strip("\n")))
+
+	return classified_labels
+
+
+def DBSCAN_main(X, rnd_indices):
     X = StandardScaler().fit_transform(X)
+
+    # start_dbscan = time.time()
     dictionary = {"if_mydbscan":0, "else_mydbscan":0, "else_gc_body_subordinate_if":0, "else_gc":0}
     my_labels, dictionary = MyDBSCAN(X, dictionary, eps=0.3, MinPts=10)
-    
-    db = DBSCAN(eps=0.3, min_samples=10).fit(X)
-    skl_labels = db.labels_
+    # end_dbscan = time.time()
+
+    # time_dbscan = end_dbscan - start_dbscan
+    # print("Elapsed (after compilation) = %s" % (time_dbscan))
+
+    skl_labels = get_labels_DBSCAN(rnd_indices)
     num_disagree = validate_DBSCAN(skl_labels, my_labels) 
     return num_disagree, dictionary
 
@@ -106,20 +133,31 @@ def cost_analysis(length, dictionary, k, maxiter):
     cmd = "valgrind --tool=cachegrind python3 KMeans.py " + str(k) + " " + str(maxiter)
     with open("temp", "w") as f:
         subprocess.Popen(cmd, stdout=f, stderr=f, shell=True).wait()
-    cmd = "tail -n16 temp>&input_kmeans"
-    subprocess.Popen(cmd, shell=True).wait()
+
+    cmd = "tail -n16 temp"
+    with open("input_kmeans", "w") as f:
+        subprocess.Popen(cmd, stdout=f, stderr=f, shell=True).wait()
 
     # getting memory costs for dbscan
     cmd = "valgrind --tool=cachegrind python3 DBSCAN.py"
     with open("temp", "w") as f:
         subprocess.Popen(cmd, stdout=f, stderr=f, shell=True).wait()
-    cmd = "tail -n16 temp>&input_dbscan"
-    subprocess.Popen(cmd, shell=True).wait()
+
+    cmd = "tail -n16 temp"
+    with open("input_dbscan", "w") as f:
+        subprocess.Popen(cmd, stdout=f, stderr=f, shell=True).wait()
      
     cache_stats_kmeans = build_stats_dict("input_kmeans")
     print(cache_stats_kmeans)
+
+    Memory_cost = (cache_stats_kmeans['I   refs'] + cache_stats_kmeans['D   refs'] )*0.206864 + cache_stats_kmeans['LL refs']*4.34186 + cache_stats_kmeans['LL misses']*(0.02+0.282094)
+
     cache_stats_dbscan = build_stats_dict("input_dbscan")
     print(cache_stats_dbscan)
+
+    KMeans_cost += KMeans_cost + Memory_cost
+    DBSCAN_cost += DBSCAN_cost + Memory_cost
+    print(KMeans_cost + DBSCAN_cost)
         
     return KMeans_cost, DBSCAN_cost, cache_stats_kmeans, cache_stats_dbscan
 
@@ -139,19 +177,29 @@ def final_choice(KMeans_cost, DBSCAN_cost, X_population, k, maxiter):
 if __name__ == "__main__":
    
     maxiter = 50
-    accuracy_kmeans, k, X_population, X = KMeans_main(maxiter)
-    print(accuracy_kmeans)
-    if accuracy_kmeans == 1:
-        X= X_population
-        centroids = np.asarray([[1.0, 1.0], [-1.0, -1.0], [1.0, -1.0]]) #KMeans
-        classes = np.zeros(X.shape[0], dtype=np.float64)
-        distances = np.zeros([X.shape[0], k], dtype=np.float64)
-        
-        centroids, classes = MyKMeans(maxiter, centroids, classes, distances, X, k)
-        print(centroids)
+    accuracy_kmeans, k, X_population, X, rnd_indices = KMeans_main(maxiter)
+    print("Accuracy_KMEANS", accuracy_kmeans)
+    if accuracy_kmeans == 300:
+	    X= X_population
+	    centroids = np.asarray([[1.0, 1.0], [-1.0, -1.0], [1.0, -1.0]]) #KMeans
+	    classes = np.zeros(X.shape[0], dtype=np.float64)
+	    distances = np.zeros([X.shape[0], k], dtype=np.float64)
+		
+	    centroids, classes = MyKMeans(maxiter, centroids, classes, distances, X, k)
+	    print(centroids)
     else:
-        #DBSCAN
-        num_disagree, dictionary = DBSCAN_main(X)
-        print('FAIL -', num_disagree, 'labels don\'t match.')
-        KMeans_cost, DBSCAN_cost, cache_stats_kmeans, cache_stats_dbscan = cost_analysis(len(X), dictionary, k, maxiter)
-        final_choice(KMeans_cost, DBSCAN_cost, X_population, k, maxiter)
+		#DBSCAN
+        num_disagree, dictionary = DBSCAN_main(X, rnd_indices)
+        print("Accuracy_DBSCAN", num_disagree)
+
+        if num_disagree == 300:
+            print('PASS - All labels match!')
+
+            X= X_population
+            X = StandardScaler().fit_transform(X)
+            my_labels = MyDBSCAN_without_cost(X, eps=0.3, MinPts=10)
+
+        else:
+            print('FAIL -', num_disagree, 'labels don\'t match.')
+            KMeans_cost, DBSCAN_cost, cache_stats_kmeans, cache_stats_dbscan = cost_analysis(len(X), dictionary, k, maxiter)
+            final_choice(KMeans_cost, DBSCAN_cost, X_population, k, maxiter)
