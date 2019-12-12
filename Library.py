@@ -8,8 +8,8 @@ from sklearn.cluster import DBSCAN
 import subprocess
 import os
 
-def KMeans_main(maxiter, fraction):
-    X, X_population, rnd_indices = KMeans_initialize(fraction)
+def KMeans_main(maxiter, fraction, data_file):
+    X, X_population, rnd_indices = KMeans_initialize(fraction, data_file)
     k = determine_K(X)
     
     #Defining centers
@@ -24,7 +24,7 @@ def KMeans_main(maxiter, fraction):
     # end_kmeans = time.time()
     #print(centroids)
 
-    accuracy_kmeans = validate_Kmeans(X, centroids, classes, rnd_indices)
+    accuracy_kmeans = validate_Kmeans(X, centroids, classes, rnd_indices, label_file)
     
     # Time taken in seconds
     # time_kmeans = end_kmeans - start_kmeans
@@ -50,8 +50,8 @@ def validate_DBSCAN(skl_labels, my_labels):
             count += 1
     return num_disagree/len(skl_labels)
 
-def get_labels_DBSCAN(rnd_indices):
-	f = open("make_blobs_labels.txt", "r")
+def get_labels_DBSCAN(rnd_indices, label_file):
+	f = open(label_file, "r")
 	lines = f.readlines()
 	classified_labels = []
 
@@ -62,7 +62,7 @@ def get_labels_DBSCAN(rnd_indices):
 	return classified_labels
 
 
-def DBSCAN_main(X, rnd_indices):
+def DBSCAN_main(X, rnd_indices, label_file):
     X = StandardScaler().fit_transform(X)
 
     # start_dbscan = time.time()
@@ -73,7 +73,7 @@ def DBSCAN_main(X, rnd_indices):
     # time_dbscan = end_dbscan - start_dbscan
     # print("Elapsed (after compilation) = %s" % (time_dbscan))
 
-    skl_labels = get_labels_DBSCAN(rnd_indices)
+    skl_labels = get_labels_DBSCAN(rnd_indices, label_file)
     num_disagree = validate_DBSCAN(skl_labels, my_labels) 
     return num_disagree, dictionary
 
@@ -137,7 +137,7 @@ def cost_analysis(length, dictionary, k, maxiter, fraction):
         subprocess.Popen(cmd, stdout=f, stderr=f, shell=True).wait()
 
     cmd = "tail -n16 temp"
-    with open("input_kmeans", "w") as f:
+    with open("input_kmeans_"+str(fraction), "w") as f:
         subprocess.Popen(cmd, stdout=f, stderr=f, shell=True).wait()
 
     # getting memory costs for dbscan
@@ -146,15 +146,15 @@ def cost_analysis(length, dictionary, k, maxiter, fraction):
         subprocess.Popen(cmd, stdout=f, stderr=f, shell=True).wait()
 
     cmd = "tail -n16 temp"
-    with open("input_dbscan", "w") as f:
+    with open("input_dbscan_"+str(fraction), "w") as f:
         subprocess.Popen(cmd, stdout=f, stderr=f, shell=True).wait()
      
-    cache_stats_kmeans = build_stats_dict("input_kmeans")
+    cache_stats_kmeans = build_stats_dict("input_kmeans_"+str(fraction))
     print(cache_stats_kmeans)
 
     Memory_cost = (cache_stats_kmeans['I   refs'] + cache_stats_kmeans['D   refs'] )*0.206864 + cache_stats_kmeans['LL refs']*4.34186 + cache_stats_kmeans['LL misses']*(0.02+0.282094)
 
-    cache_stats_dbscan = build_stats_dict("input_dbscan")
+    cache_stats_dbscan = build_stats_dict("input_dbscan_"+str(fraction))
     print(cache_stats_dbscan)
 
     KMeans_cost += KMeans_cost + Memory_cost
@@ -178,13 +178,16 @@ def final_choice(KMeans_cost, DBSCAN_cost, X_population, k, maxiter):
 
 if __name__ == "__main__":
    
-    if len(sys.argv) < 2:
-        print("Enter fraction")
+    if len(sys.argv) < 4:
+        print("Enter fraction data_file label_file")
         exit()
 
     fraction = float(sys.argv[1])
+    data_file = sys.argv[2]
+    label_file = sys.argv[3]
+
     maxiter = 50
-    accuracy_kmeans, k, X_population, X, rnd_indices = KMeans_main(maxiter, fraction)
+    accuracy_kmeans, k, X_population, X, rnd_indices = KMeans_main(maxiter, fraction, data_file)
     data_size = int(len(X_population) * fraction)
     print("Accuracy_KMEANS", accuracy_kmeans)
     if accuracy_kmeans == 1:
@@ -197,7 +200,7 @@ if __name__ == "__main__":
 	    print(centroids)
     else:
 		#DBSCAN
-        num_disagree, dictionary = DBSCAN_main(X, rnd_indices)
+        num_disagree, dictionary = DBSCAN_main(X, rnd_indices, label_file)
         print("Accuracy_DBSCAN", 1-num_disagree)
 
         if num_disagree == 0:

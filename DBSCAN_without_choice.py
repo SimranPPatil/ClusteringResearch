@@ -9,12 +9,12 @@ from sklearn.cluster import KMeans
 from scipy.spatial.distance import cdist
 
 
-def DBSCAN_initialize(fraction):   
+def DBSCAN_initialize(fraction, data_file):   
     X_population = []
     X_temp = []
 
     #data cleaning and reading from the input file
-    with open("make_blobs_data.txt", "r") as f:
+    with open(data_file, "r") as f:
         for line in f:
             line = line.strip().split(" ")
             X_values = []
@@ -76,11 +76,12 @@ def regionQuery(D, P, eps):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Enter fraction of dataset")
+    if len(sys.argv) < 3:
+        print("Enter fraction of dataset data_file")
         exit()
         
     fraction = float(sys.argv[1])
-    X, X_population = DBSCAN_initialize(fraction)
+    data_file = sys.argv[2]
+    X, X_population = DBSCAN_initialize(fraction, data_file)
     my_labels = MyDBSCAN(X, eps=0.3, MinPts=10)
 	

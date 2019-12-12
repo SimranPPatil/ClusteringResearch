@@ -7,12 +7,12 @@ import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 from scipy.spatial.distance import cdist
 
-def KMeans_initialize(fraction):   
+def KMeans_initialize(fraction, data_file):   
     X_population = []
     X_temp = []
 
     #data cleaning and reading from the input file
-    with open("make_blobs_data.txt", "r") as f:
+    with open(data_file, "r") as f:
         for line in f:
             line = line.strip().split(" ")
             X_values = []
@@ -64,14 +64,14 @@ def MyKMeans(maxiter, centroids, classes, distances, X, k):
 
     return centroids, classes
 
-def validate_Kmeans(X, centroids, classes, rnd_indices):
+def validate_Kmeans(X, centroids, classes, rnd_indices, label_file):
 	#Validating
 	#kmeans = KMeans(n_clusters=3)
 	#kmeans = kmeans.fit(X)
 	#centroids_orig = kmeans.cluster_centers_
 	#classified_labels = kmeans.labels_
 	
-	f = open("make_blobs_labels.txt", "r")
+	f = open(label_file, "r")
 	lines = f.readlines()
 	classified_labels = []
 
@@ -105,7 +105,7 @@ if __name__ == "__main__":
     fraction = float(sys.argv[3])
     print(k,maxiter, fraction)
     
-    X, X_population, rnd_indices = KMeans_initialize(fraction)
+    X, X_population, rnd_indices = KMeans_initialize(fraction, data_file)
     centroids = np.random.rand(k,2) #KMeans
     print("centroids at start: ", centroids)
     classes = np.zeros(X.shape[0], dtype=np.float64)
