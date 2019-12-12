@@ -3,7 +3,6 @@ import time
 import subprocess
 import numpy as np
 import numpy
-import subprocess
 from numba import jit
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
@@ -31,7 +30,7 @@ def DBSCAN_initialize():
     X = X_population[rnd_indices]
     return X, X_population
 
-def MyDBSCAN(D, eps, MinPts):
+def MyDBSCAN_without_cost(D, eps, MinPts):
     # -1 - Indicates a noise point; 0 - Means the point hasn't been considered yet.
     # Initially all labels are 0.    
     labels = [0]*len(D)
@@ -77,5 +76,7 @@ def regionQuery(D, P, eps):
 
 
 if __name__ == "__main__":
-    X, X_population = DBSCAN_initialize()
-    my_labels = MyDBSCAN(X, eps=0.3, MinPts=10)
+
+	X, X_population = DBSCAN_initialize()
+	my_labels = MyDBSCAN(X, eps=0.3, MinPts=10)
+	

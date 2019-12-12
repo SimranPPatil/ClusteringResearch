@@ -26,7 +26,7 @@ def KMeans_initialize():
     #Selects the number of data points from the dataset
     rnd_indices = np.random.choice(indices, size=300)
     X = X_population[rnd_indices]
-    return X, X_population
+    return X, X_population, rnd_indices
 
 def determine_K(X):
     #Determining the value of k in kmeans
@@ -56,25 +56,40 @@ def MyKMeans(maxiter, centroids, classes, distances, X, k):
         
         # Determine class membership of each point by picking the closest centroid
         classes = np.argmin(distances, axis=1)
-    
         # Update centroid location using the newly assigned data point classes
         for centroid in range(k):
+            #print(centroid, centroids)
             centroids[centroid] = np.mean(X[classes == centroid], 0)
 
     return centroids, classes
 
-def validate_Kmeans(X, centroids):
+def validate_Kmeans(X, centroids, classes, rnd_indices):
 	#Validating
-	kmeans = KMeans(n_clusters=3)
-	kmeans = kmeans.fit(X)
-	centroids_orig = kmeans.cluster_centers_
+	#kmeans = KMeans(n_clusters=3)
+	#kmeans = kmeans.fit(X)
+	#centroids_orig = kmeans.cluster_centers_
+	#classified_labels = kmeans.labels_
+	
+	f = open("make_blobs_labels.txt", "r")
+	lines = f.readlines()
+	classified_labels = []
 
+	#Extracting labels from the file
+	for i in rnd_indices:
+		classified_labels.append(int(lines[i].strip("\n")))	
+	
+	#print(len(classified_labels))
 	iteration = 0
 	#Assuming 100% accuracy
-	accuracy_kmeans = 1
-	while(centroids[iteration] not in centroids_orig and accuracy_kmeans != 0 and iteration < 3):
-		accuracy_kmeans = 0 #Accuracy not 100%
-		iteration += 1
+
+	accuracy_kmeans = 0
+	for i in range(0, len(classes)):
+		if classified_labels[i] == classes[i]:
+			accuracy_kmeans += 1
+	
+	#while(centroids[iteration] not in centroids_orig and accuracy_kmeans != 0 and iteration < 3):
+	#	accuracy_kmeans = 0 #Accuracy not 100%
+	#	iteration += 1
 	#print(accuracy_kmeans)
 	return accuracy_kmeans
 
@@ -87,7 +102,7 @@ if __name__ == "__main__":
 	maxiter = int(sys.argv[2])
 	print(k,maxiter)
 
-	X, X_population = KMeans_initialize()
+	X, X_population, rnd_indices = KMeans_initialize()
 
 	centroids = np.asarray([[1.0, 1.0], [-1.0, -1.0], [1.0, -1.0]]) #KMeans
 	classes = np.zeros(X.shape[0], dtype=np.float64)
