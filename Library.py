@@ -7,6 +7,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import DBSCAN
 import subprocess
 import os
+from decimal import Decimal
 
 def KMeans_main(maxiter, fraction, data_file):
     X, X_population, rnd_indices = KMeans_initialize(fraction, data_file)
@@ -120,8 +121,6 @@ def build_stats_dict(filename):
                         cache_stats.setdefault(key, val)
                 except Exception as e:
                     print(e)
-        for key in cache_stats:
-            print(key)
         return cache_stats
 
 def cost_analysis(length, dictionary, k, maxiter, fraction):
@@ -148,18 +147,20 @@ def cost_analysis(length, dictionary, k, maxiter, fraction):
     cmd = "tail -n16 temp"
     with open("input_dbscan_"+str(fraction), "w") as f:
         subprocess.Popen(cmd, stdout=f, stderr=f, shell=True).wait()
-     
+    
     cache_stats_kmeans = build_stats_dict("input_kmeans_"+str(fraction))
     print(cache_stats_kmeans)
 
-    Memory_cost = (cache_stats_kmeans['I   refs'] + cache_stats_kmeans['D   refs'] )*0.206864 + cache_stats_kmeans['LL refs']*4.34186 + cache_stats_kmeans['LL misses']*(0.02+0.282094)
+    Memory_cost_kmeans = int("".join(cache_stats_kmeans['I   refs'].split(","))) + int("".join(cache_stats_kmeans['D   refs'].split(",")))*0.206864 + int("".join(cache_stats_kmeans['LL refs'].split(",")))*4.34186 + int("".join(cache_stats_kmeans['LL misses'].split(",")))*(0.02+0.282094)
 
     cache_stats_dbscan = build_stats_dict("input_dbscan_"+str(fraction))
     print(cache_stats_dbscan)
 
-    KMeans_cost += KMeans_cost + Memory_cost
-    DBSCAN_cost += DBSCAN_cost + Memory_cost
-    print(KMeans_cost + DBSCAN_cost)
+    Memory_cost_dbscan = int("".join(cache_stats_dbscan['I   refs'].split(","))) + int("".join(cache_stats_dbscan['D   refs'].split(",")))*0.206864 + int("".join(cache_stats_dbscan['LL refs'].split(",")))*4.34186 + int("".join(cache_stats_dbscan['LL misses'].split(",")))*(0.02+0.282094)
+
+    KMeans_cost += KMeans_cost + Memory_cost_kmeans
+    DBSCAN_cost += DBSCAN_cost + Memory_cost_dbscan
+    print(KMeans_cost, DBSCAN_cost)
         
     return KMeans_cost, DBSCAN_cost, cache_stats_kmeans, cache_stats_dbscan
 
@@ -199,7 +200,7 @@ if __name__ == "__main__":
 	    centroids, classes = MyKMeans(maxiter, centroids, classes, distances, X, k)
 	    print(centroids)
     else:
-		#DBSCAN
+	#DBSCAN
         num_disagree, dictionary = DBSCAN_main(X, rnd_indices, label_file)
         print("Accuracy_DBSCAN", 1-num_disagree)
 
