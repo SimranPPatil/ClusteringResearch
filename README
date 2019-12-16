@@ -1,0 +1,26 @@
+Data-sets to run:
+1. make_blobs_data.txt
+2. make_moons_data.txt
+3. make_circles_data.txt
+
+Corresponding labels:
+1. make_blobs_labels.txt
+2. make_moons_labels.txt
+3. make_circles_labels.txt
+
+Commands to run:
+python3 <Our Pipeline> <Fraction of dataset> <data-set> <labels>
+python3 Library.py 0.14 make_circles_data.txt make_circles_labels.txt
+
+Installations Required:
+1. Valgrind
+2. Sklearn
+3. CACTI Tool
+
+Files Prosent:
+KMeans.py runs only KMeans Clustering Algorithm
+DBSCAN.py runs only DBSCAN Clustering Algorithm
+Library.py runs our pipeline
+Results folder has the results of our runs
+
+
