@@ -1,3 +1,6 @@
+Clustering On The Fly - A Pursuit for the Optimal Algorithm
+Our pipeline helps to select the most optimal clustering at runtime based on the cost model we have developed (Includes computation cost and Memory cost). 
+
 Data-sets to run:
 1. make_blobs_data.txt
 2. make_moons_data.txt
