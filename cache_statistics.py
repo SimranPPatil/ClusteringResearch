@@ -3,6 +3,7 @@ import subprocess
 
 def execute_pipeline(fraction, filename):
     cmd = "python3 Library.py " + str(fraction) + " " + data_file + " " + label_file
+    #cmd = "valgrind --tool=cachegrind python3 KMeans.py " + str(3) + " " + str(50) + " " + str(fraction) + " " + "make_moons_data.txt"
     with open(filename, "a+") as f:
         subprocess.Popen(cmd, stdout=f, stderr=f, shell=True).wait()
 

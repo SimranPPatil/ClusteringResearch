@@ -1,0 +1,31 @@
+==24040== Cachegrind, a cache and branch-prediction profiler
+==24040== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
+==24040== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==24040== Command: python3 KMeans.py 3 50 0.01 make_blobs_data.txt
+==24040== 
+--24040-- warning: L3 cache found, using its data for the LL simulation.
+--24040-- warning: specified LL cache: line_size 64  assoc 12  total_size 9,437,184
+--24040-- warning: simulated LL cache: line_size 64  assoc 18  total_size 9,437,184
+==24040== brk segment overflow in thread #1: can't grow to 0x4a2e000
+==24040== (see section Limitations in user manual)
+==24040== NOTE: further instances of this message will not be shown
+3 50 0.01 make_blobs_data.txt
+[[ 0.95005815  1.01188996]
+ [-1.06398015 -1.05514041]
+ [ 1.03736056 -1.02419735]]
+==24040== 
+==24040== I   refs:      4,215,457,365
+==24040== I1  misses:       37,849,536
+==24040== LLi misses:          157,319
+==24040== I1  miss rate:          0.90%
+==24040== LLi miss rate:          0.00%
+==24040== 
+==24040== D   refs:      1,717,415,220  (1,165,372,062 rd   + 552,043,158 wr)
+==24040== D1  misses:       48,761,571  (   42,176,541 rd   +   6,585,030 wr)
+==24040== LLd misses:        9,002,423  (    7,353,261 rd   +   1,649,162 wr)
+==24040== D1  miss rate:           2.8% (          3.6%     +         1.2%  )
+==24040== LLd miss rate:           0.5% (          0.6%     +         0.3%  )
+==24040== 
+==24040== LL refs:          86,611,107  (   80,026,077 rd   +   6,585,030 wr)
+==24040== LL misses:         9,159,742  (    7,510,580 rd   +   1,649,162 wr)
+==24040== LL miss rate:            0.2% (          0.1%     +         0.3%  )

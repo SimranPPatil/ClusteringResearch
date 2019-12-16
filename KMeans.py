@@ -107,14 +107,27 @@ if __name__ == "__main__":
     data_file = sys.argv[4]
     print(k,maxiter, fraction,  data_file)
     
+    start_kmeans = time.time()
+
     X, X_population = KMeans_initialize(fraction, data_file)
+    #print(len(X))
     #centroids = np.random.rand(k,2) #KMeans
     #print("centroids at start: ", centroids)
+
     centroids = X[:k]
+    #print(len(X))
     classes = np.zeros(X.shape[0], dtype=np.float64)
     distances = np.zeros([X.shape[0], k], dtype=np.float64)
     centroids, classes = MyKMeans(maxiter, centroids, classes, distances, X, k)
-    print(centroids)
+    #db = KMeans(n_clusters=k).fit(X)
+
+    end_kmeans = time.time()
+
+    #Time taken in seconds
+    time_kmeans = end_kmeans - start_kmeans
+    print("Elapsed (after compilation) = %s" % time_kmeans)
+    
+    #print(centroids)
 	
 
 	

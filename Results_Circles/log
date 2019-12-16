@@ -1,0 +1,258 @@
+Traceback (most recent call last):
+  File "Library.py", line 195, in <module>
+    accuracy_kmeans, k, X_population, X, centroids = KMeans_main(maxiter, fraction, data_file)
+  File "Library.py", line 14, in KMeans_main
+    k = determine_K(X)
+  File "/home/vandana/OS/Final/ClusteringResearch/KMeans.py", line 37, in determine_K
+    kmeanModel = KMeans(n_clusters=k).fit(X)
+  File "/home/vandana/anaconda3/lib/python3.7/site-packages/sklearn/cluster/k_means_.py", line 972, in fit
+    return_n_iter=True)
+  File "/home/vandana/anaconda3/lib/python3.7/site-packages/sklearn/cluster/k_means_.py", line 316, in k_means
+    _num_samples(X), n_clusters))
+ValueError: n_samples=7 should be >= n_clusters=8
+DATA_SIZE 70
+Accuracy_KMEANS 0.2714285714285714
+Accuracy_DBSCAN 0.0
+FAIL - 1.0 labels don't match.
+KMeans cost =  73780
+DBSCAN_cost =  29470
+[[ 0.06669795 -0.75383621]
+ [-0.66583298  0.39684502]
+ [ 0.62398591  0.51728494]]
+{'I   refs': '3,873,986,426', 'I1  misses': '36,148,146', 'LLi misses': '156,529', 'I1  miss rate': '0.93%', 'LLi miss rate': '0.00%', 'D   refs': '1,574,842,516', 'D1  misses': '47,718,530', 'LLd misses': '8,932,208', 'D1  miss rate': '3.0%', 'LLd miss rate': '0.6%', 'LL refs': '83,866,676', 'LL misses': '9,088,737', 'LL miss rate': '0.2%'}
+{'I   refs': '3,755,092,936', 'I1  misses': '34,714,301', 'LLi misses': '154,225', 'I1  miss rate': '0.92%', 'LLi miss rate': '0.00%', 'D   refs': '1,526,229,952', 'D1  misses': '47,105,712', 'LLd misses': '8,901,327', 'D1  miss rate': '3.1%', 'LLd miss rate': '0.6%', 'LL refs': '81,820,013', 'LL misses': '9,055,552', 'LL miss rate': '0.2%'}
+4566795227.002462 4428860578.360596
+DATA_SIZE 140
+Accuracy_KMEANS 0.2357142857142857
+Accuracy_DBSCAN 0.02857142857142858
+FAIL - 0.9714285714285714 labels don't match.
+KMeans cost =  196700
+DBSCAN_cost =  154659960
+[[ 0.38164585 -0.67740442]
+ [-0.73307243 -0.35561118]
+ [ 0.58637035  0.56901251]
+ [-0.51791283  0.68056053]]
+{'I   refs': '3,882,173,566', 'I1  misses': '36,570,649', 'LLi misses': '156,524', 'I1  miss rate': '0.94%', 'LLi miss rate': '0.00%', 'D   refs': '1,579,867,509', 'D1  misses': '47,713,609', 'LLd misses': '8,927,871', 'D1  miss rate': '3.0%', 'LLd miss rate': '0.6%', 'LL refs': '84,284,258', 'LL misses': '9,084,395', 'LL miss rate': '0.2%'}
+{'I   refs': '3,750,310,007', 'I1  misses': '34,704,039', 'LLi misses': '154,241', 'I1  miss rate': '0.93%', 'LLi miss rate': '0.00%', 'D   refs': '1,526,214,876', 'D1  misses': '47,073,476', 'LLd misses': '8,908,048', 'D1  miss rate': '3.1%', 'LLd miss rate': '0.6%', 'LL refs': '81,777,515', 'LL misses': '9,062,289', 'LL miss rate': '0.2%'}
+4578079468.044786 4733153025.51993
+DATA_SIZE 210
+Accuracy_KMEANS 0.21904761904761905
+Accuracy_DBSCAN 0.09999999999999998
+FAIL - 0.9 labels don't match.
+KMeans cost =  295050
+DBSCAN_cost =  46025622930
+[[ 0.37395672 -0.66614654]
+ [-0.7561097  -0.35404993]
+ [ 0.60051673  0.52931837]
+ [-0.5251844   0.68124078]]
+{'I   refs': '3,876,565,166', 'I1  misses': '36,503,121', 'LLi misses': '156,494', 'I1  miss rate': '0.94%', 'LLi miss rate': '0.00%', 'D   refs': '1,580,112,817', 'D1  misses': '47,714,811', 'LLd misses': '8,926,917', 'D1  miss rate': '3.0%', 'LLd miss rate': '0.6%', 'LL refs': '84,217,932', 'LL misses': '9,083,411', 'LL miss rate': '0.2%'}
+{'I   refs': '3,747,627,177', 'I1  misses': '34,629,272', 'LLi misses': '154,262', 'I1  miss rate': '0.92%', 'LLi miss rate': '0.00%', 'D   refs': '1,524,731,500', 'D1  misses': '46,897,223', 'LLd misses': '8,904,457', 'D1  miss rate': '3.1%', 'LLd miss rate': '0.6%', 'LL refs': '81,526,495', 'LL misses': '9,058,719', 'LL miss rate': '0.2%'}
+4572430237.972042 96470998306.25429
+DATA_SIZE 280
+Accuracy_KMEANS 0.24285714285714285
+Accuracy_DBSCAN 0.22142857142857142
+FAIL - 0.7785714285714286 labels don't match.
+KMeans cost =  393400
+DBSCAN_cost =  259818177360
+[[ 0.62869492 -0.48893069]
+ [-0.57365399 -0.54699135]
+ [ 0.51409148  0.65364365]
+ [-0.57552672  0.61472562]]
+{'I   refs': '3,882,811,361', 'I1  misses': '36,471,043', 'LLi misses': '156,504', 'I1  miss rate': '0.94%', 'LLi miss rate': '0.00%', 'D   refs': '1,582,353,350', 'D1  misses': '47,764,664', 'LLd misses': '8,930,112', 'D1  miss rate': '3.0%', 'LLd miss rate': '0.6%', 'LL refs': '84,235,707', 'LL misses': '9,086,616', 'LL miss rate': '0.2%'}
+{'I   refs': '3,742,104,319', 'I1  misses': '34,652,061', 'LLi misses': '154,187', 'I1  miss rate': '0.93%', 'LLi miss rate': '0.00%', 'D   refs': '1,524,029,284', 'D1  misses': '46,755,033', 'LLd misses': '8,904,483', 'D1  miss rate': '3.1%', 'LLd miss rate': '0.6%', 'LL refs': '81,407,094', 'LL misses': '9,058,670', 'LL miss rate': '0.2%'}
+4579414763.363324 524049920607.8152
+DATA_SIZE 350
+Accuracy_KMEANS 0.24285714285714285
+Accuracy_DBSCAN 0.2114285714285714
+FAIL - 0.7885714285714286 labels don't match.
+KMeans cost =  491750
+DBSCAN_cost =  354859723400
+[[ 0.76764926 -0.32883476]
+ [-0.30116257 -0.7493803 ]
+ [ 0.38858629  0.7284305 ]
+ [-0.72180539  0.37288304]]
+{'I   refs': '3,888,461,441', 'I1  misses': '36,505,565', 'LLi misses': '156,429', 'I1  miss rate': '0.94%', 'LLi miss rate': '0.00%', 'D   refs': '1,584,975,104', 'D1  misses': '47,825,164', 'LLd misses': '8,934,927', 'D1  miss rate': '3.0%', 'LLd miss rate': '0.6%', 'LL refs': '84,330,729', 'LL misses': '9,091,356', 'LL miss rate': '0.2%'}
+{'I   refs': '3,749,663,578', 'I1  misses': '34,634,745', 'LLi misses': '154,183', 'I1  miss rate': '0.92%', 'LLi miss rate': '0.00%', 'D   refs': '1,525,231,716', 'D1  misses': '46,724,362', 'LLd misses': '8,902,790', 'D1  miss rate': '3.1%', 'LLd miss rate': '0.6%', 'LL refs': '81,359,107', 'LL misses': '9,056,973', 'LL miss rate': '0.2%'}
+4586217894.029261 714140611821.2191
+DATA_SIZE 420
+Accuracy_KMEANS 0.25
+Accuracy_DBSCAN 0.4452380952380952
+FAIL - 0.5547619047619048 labels don't match.
+KMeans cost =  590100
+DBSCAN_cost =  308067432540
+[[ 0.61101272 -0.51748971]
+ [-0.59537984 -0.52923741]
+ [ 0.52141482  0.63752948]
+ [-0.58583168  0.59567786]]
+{'I   refs': '3,887,166,994', 'I1  misses': '36,453,440', 'LLi misses': '156,568', 'I1  miss rate': '0.94%', 'LLi miss rate': '0.00%', 'D   refs': '1,585,956,378', 'D1  misses': '47,734,801', 'LLd misses': '8,928,975', 'D1  miss rate': '3.0%', 'LLd miss rate': '0.6%', 'LL refs': '84,188,241', 'LL misses': '9,085,543', 'LL miss rate': '0.2%'}
+{'I   refs': '3,756,712,111', 'I1  misses': '34,704,677', 'LLi misses': '154,244', 'I1  miss rate': '0.92%', 'LLi miss rate': '0.00%', 'D   refs': '1,526,902,460', 'D1  misses': '47,044,098', 'LLd misses': '8,905,301', 'D1  miss rate': '3.1%', 'LLd miss rate': '0.6%', 'LL refs': '81,748,775', 'LL misses': '9,059,545', 'LL miss rate': '0.2%'}
+4584702718.273894 620565116911.8942
+DATA_SIZE 490
+Accuracy_KMEANS 0.2571428571428571
+Accuracy_DBSCAN 0.5285714285714286
+FAIL - 0.4714285714285714 labels don't match.
+KMeans cost =  688450
+DBSCAN_cost =  287418669860
+[[ 0.61648452 -0.51082468]
+ [-0.61470951 -0.5111945 ]
+ [ 0.50556501  0.65116474]
+ [-0.60258292  0.58885273]]
+{'I   refs': '3,898,971,234', 'I1  misses': '36,417,384', 'LLi misses': '156,525', 'I1  miss rate': '0.93%', 'LLi miss rate': '0.00%', 'D   refs': '1,588,930,495', 'D1  misses': '47,880,628', 'LLd misses': '8,929,314', 'D1  miss rate': '3.0%', 'LLd miss rate': '0.6%', 'LL refs': '84,298,012', 'LL misses': '9,085,839', 'LL miss rate': '0.2%'}
+{'I   refs': '3,751,925,778', 'I1  misses': '34,651,687', 'LLi misses': '154,255', 'I1  miss rate': '0.92%', 'LLi miss rate': '0.00%', 'D   refs': '1,526,014,438', 'D1  misses': '47,084,157', 'LLd misses': '8,904,773', 'D1  miss rate': '3.1%', 'LLd miss rate': '0.6%', 'LL refs': '81,735,844', 'LL misses': '9,059,028', 'LL miss rate': '0.2%'}
+4597795595.746866 579262565218.3369
+DATA_SIZE 560
+Accuracy_KMEANS 0.26785714285714285
+Accuracy_DBSCAN 0.5392857142857144
+FAIL - 0.4607142857142857 labels don't match.
+KMeans cost =  786800
+DBSCAN_cost =  490673615040
+[[ 0.5725821  -0.54833771]
+ [-0.65943524 -0.4607312 ]
+ [ 0.52830226  0.63166614]
+ [-0.57321564  0.6338562 ]]
+{'I   refs': '3,897,020,680', 'I1  misses': '36,545,594', 'LLi misses': '156,461', 'I1  miss rate': '0.94%', 'LLi miss rate': '0.00%', 'D   refs': '1,590,694,450', 'D1  misses': '48,020,892', 'LLd misses': '8,930,588', 'D1  miss rate': '3.0%', 'LLd miss rate': '0.6%', 'LL refs': '84,566,486', 'LL misses': '9,087,049', 'LL miss rate': '0.2%'}
+{'I   refs': '3,747,767,210', 'I1  misses': '34,650,595', 'LLi misses': '154,302', 'I1  miss rate': '0.92%', 'LLi miss rate': '0.00%', 'D   refs': '1,525,256,782', 'D1  misses': '46,844,071', 'LLd misses': '8,906,071', 'D1  miss rate': '3.1%', 'LLd miss rate': '0.6%', 'LL refs': '81,494,666', 'LL misses': '9,060,373', 'LL miss rate': '0.2%'}
+4597572682.589366 985767093523.7915
+DATA_SIZE 630
+Accuracy_KMEANS 0.2634920634920635
+Accuracy_DBSCAN 0.526984126984127
+FAIL - 0.473015873015873 labels don't match.
+KMeans cost =  885150
+DBSCAN_cost =  786650245920
+[[ 0.57861609 -0.54023355]
+ [-0.66159184 -0.46799734]
+ [ 0.53492758  0.61990847]
+ [-0.56257808  0.62049859]]
+{'I   refs': '3,913,304,473', 'I1  misses': '36,562,238', 'LLi misses': '156,477', 'I1  miss rate': '0.93%', 'LLi miss rate': '0.00%', 'D   refs': '1,595,435,740', 'D1  misses': '48,087,093', 'LLd misses': '8,929,680', 'D1  miss rate': '3.0%', 'LLd miss rate': '0.6%', 'LL refs': '84,649,331', 'LL misses': '9,086,157', 'LL miss rate': '0.2%'}
+{'I   refs': '3,750,592,637', 'I1  misses': '34,686,901', 'LLi misses': '154,281', 'I1  miss rate': '0.92%', 'LLi miss rate': '0.00%', 'D   refs': '1,526,086,626', 'D1  misses': '46,963,459', 'LLd misses': '8,902,614', 'D1  miss rate': '3.1%', 'LLd miss rate': '0.6%', 'LL refs': '81,650,360', 'LL misses': '9,056,895', 'LL miss rate': '0.2%'}
+4615393409.727778 1577724027326.5085
+DATA_SIZE 700
+Accuracy_KMEANS 0.26571428571428574
+Accuracy_DBSCAN 0.5185714285714286
+FAIL - 0.48142857142857143 labels don't match.
+KMeans cost =  983500
+DBSCAN_cost =  1199130942800
+[[ 0.6353008  -0.49315075]
+ [-0.59678555 -0.54395525]
+ [ 0.48722001  0.66499015]
+ [-0.61924679  0.54072552]]
+{'I   refs': '3,915,563,777', 'I1  misses': '36,539,097', 'LLi misses': '156,483', 'I1  miss rate': '0.93%', 'LLi miss rate': '0.00%', 'D   refs': '1,596,984,865', 'D1  misses': '48,132,946', 'LLd misses': '8,932,187', 'D1  miss rate': '3.0%', 'LLd miss rate': '0.6%', 'LL refs': '84,672,043', 'LL misses': '9,088,670', 'LL miss rate': '0.2%'}
+{'I   refs': '3,755,294,968', 'I1  misses': '34,737,700', 'LLi misses': '154,269', 'I1  miss rate': '0.93%', 'LLi miss rate': '0.00%', 'D   refs': '1,527,178,304', 'D1  misses': '47,019,164', 'LLd misses': '8,905,494', 'D1  miss rate': '3.1%', 'LLd miss rate': '0.6%', 'LL refs': '81,756,864', 'LL misses': '9,059,763', 'LL miss rate': '0.2%'}
+4618269243.40832 2402690812538.2495
+DATA_SIZE 1400
+Accuracy_KMEANS 0.255
+Accuracy_DBSCAN 0.49857142857142855
+FAIL - 0.5014285714285714 labels don't match.
+KMeans cost =  1967000
+DBSCAN_cost =  19197035765600
+[[ 0.75450127 -0.34045955]
+ [-0.32552014 -0.74284756]
+ [ 0.33963665  0.73210257]
+ [-0.72609485  0.3541193 ]]
+{'I   refs': '3,947,423,995', 'I1  misses': '36,542,640', 'LLi misses': '156,554', 'I1  miss rate': '0.93%', 'LLi miss rate': '0.00%', 'D   refs': '1,615,549,066', 'D1  misses': '48,794,744', 'LLd misses': '8,932,620', 'D1  miss rate': '3.0%', 'LLd miss rate': '0.6%', 'LL refs': '85,337,384', 'LL misses': '9,089,174', 'LL miss rate': '0.2%'}
+{'I   refs': '3,756,535,420', 'I1  misses': '34,663,294', 'LLi misses': '154,270', 'I1  miss rate': '0.92%', 'LLi miss rate': '0.00%', 'D   refs': '1,526,858,359', 'D1  misses': '46,895,223', 'LLd misses': '8,899,516', 'D1  miss rate': '3.1%', 'LLd miss rate': '0.6%', 'LL refs': '81,558,517', 'LL misses': '9,053,786', 'LL miss rate': '0.2%'}
+4658825696.01362 38398500769404.625
+DATA_SIZE 2100
+Accuracy_KMEANS 0.25047619047619046
+Accuracy_DBSCAN 0.4971428571428571
+FAIL - 0.5028571428571429 labels don't match.
+KMeans cost =  2950500
+DBSCAN_cost =  97203482468400
+[[ 0.71731322 -0.40213666]
+ [-0.39630276 -0.70450917]
+ [ 0.41046165  0.69034628]
+ [-0.7007907   0.41286909]]
+{'I   refs': '3,996,709,897', 'I1  misses': '36,531,673', 'LLi misses': '156,586', 'I1  miss rate': '0.91%', 'LLi miss rate': '0.00%', 'D   refs': '1,637,421,888', 'D1  misses': '49,373,763', 'LLd misses': '8,933,042', 'D1  miss rate': '3.0%', 'LLd miss rate': '0.5%', 'LL refs': '85,905,436', 'LL misses': '9,089,628', 'LL miss rate': '0.2%'}
+{'I   refs': '3,759,992,725', 'I1  misses': '34,692,628', 'LLi misses': '154,348', 'I1  miss rate': '0.92%', 'LLi miss rate': '0.00%', 'D   refs': '1,527,249,693', 'D1  misses': '46,915,393', 'LLd misses': '8,905,680', 'D1  miss rate': '3.1%', 'LLd miss rate': '0.6%', 'LL refs': '81,608,021', 'LL misses': '9,060,028', 'LL miss rate': '0.2%'}
+4717069836.871223 194411397930087.66
+DATA_SIZE 2800
+Accuracy_KMEANS 0.25285714285714284
+Accuracy_DBSCAN 0.49964285714285717
+FAIL - 0.5003571428571428 labels don't match.
+KMeans cost =  3934000
+DBSCAN_cost =  307240239051200
+[[ 0.65444659 -0.48495645]
+ [-0.50118419 -0.63295614]
+ [ 0.51176821  0.63950988]
+ [-0.62944634  0.50475105]]
+{'I   refs': '4,043,262,251', 'I1  misses': '36,556,608', 'LLi misses': '156,520', 'I1  miss rate': '0.90%', 'LLi miss rate': '0.00%', 'D   refs': '1,658,830,228', 'D1  misses': '49,845,072', 'LLd misses': '8,935,361', 'D1  miss rate': '3.0%', 'LLd miss rate': '0.5%', 'LL refs': '86,401,680', 'LL misses': '9,091,881', 'LL miss rate': '0.2%'}
+{'I   refs': '3,751,386,629', 'I1  misses': '34,655,132', 'LLi misses': '154,319', 'I1  miss rate': '0.92%', 'LLi miss rate': '0.00%', 'D   refs': '1,526,186,175', 'D1  misses': '47,076,756', 'LLd misses': '8,902,216', 'D1  miss rate': '3.1%', 'LLd miss rate': '0.6%', 'LL refs': '81,731,888', 'LL misses': '9,056,535', 'LL miss rate': '0.2%'}
+4772173108.308606 614484902806346.0
+DATA_SIZE 3500
+Accuracy_KMEANS 0.258
+Accuracy_DBSCAN 0.506
+FAIL - 0.494 labels don't match.
+KMeans cost =  4917500
+DBSCAN_cost =  750141073514000
+[[ 0.56857028 -0.57808146]
+ [-0.59533846 -0.54196522]
+ [ 0.59298247  0.56244346]
+ [-0.55801056  0.59075129]]
+{'I   refs': '4,085,802,045', 'I1  misses': '36,588,889', 'LLi misses': '156,613', 'I1  miss rate': '0.90%', 'LLi miss rate': '0.00%', 'D   refs': '1,679,772,040', 'D1  misses': '50,425,413', 'LLd misses': '8,935,324', 'D1  miss rate': '3.0%', 'LLd miss rate': '0.5%', 'LL refs': '87,014,302', 'LL misses': '9,091,937', 'LL miss rate': '0.2%'}
+{'I   refs': '3,752,372,747', 'I1  misses': '34,708,921', 'LLi misses': '154,410', 'I1  miss rate': '0.92%', 'LLi miss rate': '0.00%', 'D   refs': '1,526,582,075', 'D1  misses': '46,992,461', 'LLd misses': '8,905,218', 'D1  miss rate': '3.1%', 'LLd miss rate': '0.6%', 'LL refs': '81,701,382', 'LL misses': '9,059,628', 'LL miss rate': '0.2%'}
+4823671945.180359 1500286572668443.0
+DATA_SIZE 4200
+Accuracy_KMEANS 0.255
+Accuracy_DBSCAN 0.5057142857142858
+FAIL - 0.4942857142857143 labels don't match.
+KMeans cost =  5901000
+DBSCAN_cost =  1555551753856800
+[[ 0.61732459 -0.52970616]
+ [-0.53408619 -0.6054999 ]
+ [ 0.53495805  0.61563465]
+ [-0.61695606  0.52689932]]
+{'I   refs': '4,127,071,240', 'I1  misses': '36,549,438', 'LLi misses': '156,508', 'I1  miss rate': '0.89%', 'LLi miss rate': '0.00%', 'D   refs': '1,700,693,034', 'D1  misses': '50,962,011', 'LLd misses': '8,933,215', 'D1  miss rate': '3.0%', 'LLd miss rate': '0.5%', 'LL refs': '87,511,449', 'LL misses': '9,089,723', 'LL miss rate': '0.2%'}
+{'I   refs': '3,754,290,332', 'I1  misses': '34,754,417', 'LLi misses': '154,293', 'I1  miss rate': '0.93%', 'LLi miss rate': '0.00%', 'D   refs': '1,527,427,684', 'D1  misses': '47,032,163', 'LLd misses': '8,907,535', 'D1  miss rate': '3.1%', 'LLd miss rate': '0.6%', 'LL refs': '81,786,580', 'LL misses': '9,061,828', 'LL miss rate': '0.2%'}
+4873393814.520477 3111107935817136.5
+DATA_SIZE 4900
+Accuracy_KMEANS 0.2510204081632653
+Accuracy_DBSCAN 0.5053061224489797
+FAIL - 0.4946938775510204 labels don't match.
+KMeans cost =  6884500
+DBSCAN_cost =  2881930048079600
+[[ 0.64223055 -0.50089591]
+ [-0.50174482 -0.63689269]
+ [ 0.5026539   0.6399948 ]
+ [-0.64053822  0.49671351]]
+{'I   refs': '4,170,689,437', 'I1  misses': '36,579,737', 'LLi misses': '156,582', 'I1  miss rate': '0.88%', 'LLi miss rate': '0.00%', 'D   refs': '1,721,412,028', 'D1  misses': '51,316,278', 'LLd misses': '8,937,607', 'D1  miss rate': '3.0%', 'LLd miss rate': '0.5%', 'LL refs': '87,896,015', 'LL misses': '9,094,189', 'LL miss rate': '0.2%'}
+{'I   refs': '3,753,030,316', 'I1  misses': '34,740,247', 'LLi misses': '154,264', 'I1  miss rate': '0.93%', 'LLi miss rate': '0.00%', 'D   refs': '1,526,770,095', 'D1  misses': '46,909,572', 'LLd misses': '8,904,807', 'D1  miss rate': '3.1%', 'LLd miss rate': '0.6%', 'LL refs': '81,649,819', 'LL misses': '9,059,071', 'LL miss rate': '0.2%'}
+4924936106.379857 5763864522272059.0
+DATA_SIZE 5600
+Accuracy_KMEANS 0.24767857142857144
+Accuracy_DBSCAN 0.5039285714285715
+FAIL - 0.49607142857142855 labels don't match.
+KMeans cost =  7868000
+DBSCAN_cost =  4916545724182400
+[[ 0.64258153 -0.501193  ]
+ [-0.4971609  -0.64284475]
+ [ 0.50072919  0.63899632]
+ [-0.64569245  0.4891859 ]]
+{'I   refs': '4,220,127,605', 'I1  misses': '36,675,423', 'LLi misses': '156,557', 'I1  miss rate': '0.87%', 'LLi miss rate': '0.00%', 'D   refs': '1,744,171,823', 'D1  misses': '52,033,854', 'LLd misses': '8,938,916', 'D1  miss rate': '3.0%', 'LLd miss rate': '0.5%', 'LL refs': '88,709,277', 'LL misses': '9,095,473', 'LL miss rate': '0.2%'}
+{'I   refs': '3,759,679,230', 'I1  misses': '34,821,403', 'LLi misses': '154,460', 'I1  miss rate': '0.93%', 'LLi miss rate': '0.00%', 'D   refs': '1,529,070,806', 'D1  misses': '46,963,747', 'LLd misses': '8,903,150', 'D1  miss rate': '3.1%', 'LLd miss rate': '0.6%', 'LL refs': '81,785,150', 'LL misses': '9,057,610', 'LL miss rate': '0.2%'}
+4984580914.248754 9833095882189654.0
+DATA_SIZE 6300
+Accuracy_KMEANS 0.24904761904761905
+Accuracy_DBSCAN 0.5014285714285714
+FAIL - 0.49857142857142855 labels don't match.
+KMeans cost =  8851500
+DBSCAN_cost =  7875480550165200
+[[ 0.6334452  -0.50773286]
+ [-0.50961978 -0.6302482 ]
+ [ 0.50658808  0.63406837]
+ [-0.63517482  0.50693109]]
+{'I   refs': '4,259,201,475', 'I1  misses': '36,584,982', 'LLi misses': '156,634', 'I1  miss rate': '0.86%', 'LLi miss rate': '0.00%', 'D   refs': '1,763,585,821', 'D1  misses': '52,552,350', 'LLd misses': '8,944,794', 'D1  miss rate': '3.0%', 'LLd miss rate': '0.5%', 'LL refs': '89,137,332', 'LL misses': '9,101,428', 'LL miss rate': '0.2%'}
+{'I   refs': '3,754,045,706', 'I1  misses': '34,782,791', 'LLi misses': '154,316', 'I1  miss rate': '0.93%', 'LLi miss rate': '0.00%', 'D   refs': '1,527,254,595', 'D1  misses': '46,812,668', 'LLd misses': '8,902,097', 'D1  miss rate': '3.1%', 'LLd miss rate': '0.6%', 'LL refs': '81,595,459', 'LL misses': '9,056,413', 'LL miss rate': '0.2%'}
+5031498195.383096 1.5750965527322048e+16
+DATA_SIZE 7000
+Accuracy_KMEANS 0.25042857142857144
+Accuracy_DBSCAN 0.5
+FAIL - 0.5 labels don't match.
+KMeans cost =  9835000
+DBSCAN_cost =  12003628294028000
+[[ 0.56048903 -0.5848142 ]
+ [-0.58602823 -0.55929436]
+ [ 0.58531028  0.56062042]
+ [-0.55958433  0.58663786]]
+{'I   refs': '4,305,648,665', 'I1  misses': '36,671,934', 'LLi misses': '156,624', 'I1  miss rate': '0.85%', 'LLi miss rate': '0.00%', 'D   refs': '1,785,572,602', 'D1  misses': '53,101,596', 'LLd misses': '8,945,934', 'D1  miss rate': '3.0%', 'LLd miss rate': '0.5%', 'LL refs': '89,773,530', 'LL misses': '9,102,558', 'LL miss rate': '0.1%'}
+{'I   refs': '3,755,763,330', 'I1  misses': '34,867,529', 'LLi misses': '154,240', 'I1  miss rate': '0.93%', 'LLi miss rate': '0.00%', 'D   refs': '1,527,779,496', 'D1  misses': '47,228,698', 'LLd misses': '8,900,319', 'D1  miss rate': '3.1%', 'LLd miss rate': '0.6%', 'LL refs': '82,096,227', 'LL misses': '9,054,559', 'LL miss rate': '0.2%'}
+5087223282.86238 2.400726101904756e+16

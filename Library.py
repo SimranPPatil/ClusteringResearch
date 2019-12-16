@@ -8,6 +8,7 @@ from sklearn.cluster import DBSCAN
 import subprocess
 import os
 from decimal import Decimal
+import time
 
 def KMeans_main(maxiter, fraction, data_file):
     X, X_population = KMeans_initialize(fraction, data_file)
@@ -135,10 +136,10 @@ def cost_analysis(length, dictionary, k, maxiter, fraction, centroids, data_file
     # getting memory costs for kmeans
 
     cmd = "valgrind --tool=cachegrind python3 KMeans.py " + str(k) + " " + str(maxiter) + " " + str(fraction) + " " + data_file
-    with open("temp_kmeans", "w") as f:
+    with open("temp", "w") as f:
         subprocess.Popen(cmd, stdout=f, stderr=f, shell=True).wait()
 
-    cmd = "tail -n16 temp_kmeans"
+    cmd = "tail -n16 temp"
     with open("input_kmeans_"+str(fraction), "w") as f:
         subprocess.Popen(cmd, stdout=f, stderr=f, shell=True).wait()
 
@@ -171,14 +172,16 @@ def final_choice(KMeans_cost, DBSCAN_cost, X_population, k, maxiter, centroids):
     X= X_population
     if(KMeans_cost > DBSCAN_cost):
         X = StandardScaler().fit_transform(X)
-        my_labels = MyDBSCAN(X, eps=0.3, MinPts=10)
+        #my_labels = MyDBSCAN(X, eps=0.3, MinPts=10)
+        db = DBSCAN(eps=0.3, MinPts=10).fit(X)
     else:
                 
         classes = np.zeros(X.shape[0], dtype=np.float64)
         distances = np.zeros([X.shape[0], k], dtype=np.float64)
         #centroids = np.random.rand(k,2) #KMeans
+        db = KMeans(n_clusters=k).fit(X)
                 
-        centroids, classes = MyKMeans(maxiter, centroids, classes, distances, X_population, k)
+        #centroids, classes = MyKMeans(maxiter, centroids, classes, distances, X_population, k)
 
 if __name__ == "__main__":
    
@@ -192,8 +195,10 @@ if __name__ == "__main__":
 
     maxiter = 50
     
+    start_kmeans = time.time()
     accuracy_kmeans, k, X_population, X, centroids = KMeans_main(maxiter, fraction, data_file)
     data_size = int(len(X_population) * fraction)
+    print("DATA_SIZE", data_size)
     print("Accuracy_KMEANS", accuracy_kmeans)
 
     
@@ -201,9 +206,10 @@ if __name__ == "__main__":
 	    X= X_population
 	    classes = np.zeros(X.shape[0], dtype=np.float64)
 	    distances = np.zeros([X.shape[0], k], dtype=np.float64)
-		
-	    centroids, classes = MyKMeans(maxiter, centroids, classes, distances, X, k)
-	    print(centroids)
+	    db = KMeans(n_clusters=k).fit(X)
+
+	    #centroids, classes = MyKMeans(maxiter, centroids, classes, distances, X, k)
+	    #print(centroids)
     else:
 	#DBSCAN
         num_disagree, dictionary = DBSCAN_main(X, label_file)
@@ -214,9 +220,16 @@ if __name__ == "__main__":
 
             X= X_population
             X = StandardScaler().fit_transform(X)
-            my_labels = MyDBSCAN_without_cost(X, eps=0.3, MinPts=10)
+            db = DBSCAN(eps=0.3, min_samples=10).fit(X)
+            #my_labels = MyDBSCAN_without_cost(X, eps=0.3, MinPts=10)
 
         else:
             print('FAIL -', num_disagree, 'labels don\'t match.')
             KMeans_cost, DBSCAN_cost, cache_stats_kmeans, cache_stats_dbscan = cost_analysis(len(X), dictionary, k, maxiter, fraction, centroids, data_file)
             final_choice(KMeans_cost, DBSCAN_cost, X_population, k, maxiter, centroids)
+
+    end_kmeans = time.time()
+
+    #Time taken in seconds
+    time_kmeans = end_kmeans - start_kmeans
+    print("Elapsed (after compilation) = %s" % time_kmeans)
